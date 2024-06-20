@@ -2,45 +2,46 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [goldenValue, setGoldenValue] = useState(0)
-  const [violetValue, setVioletValue] = useState(0)
-  const [blueValue, setBlueValue] = useState(0)
-  const [violet1Value, setViolet1Value] = useState(0)
-  const [violet2Value, setViolet2Value] = useState(0)
-  const [gold1Value, setGolden1Value] = useState(0)
-  const [gold2Value, setGolden2Value] = useState(0)
-  const [gold3Value, setGolden3Value] = useState(0)
+  const [goldenValue, setGoldenValue] = useState('')
+  const [violetValue, setVioletValue] = useState('')
+  const [blueValue, setBlueValue] = useState('')
+  const [violet1Value, setViolet1Value] = useState('')
+  const [violet2Value, setViolet2Value] = useState('')
+  const [gold1Value, setGolden1Value] = useState('')
+  const [gold2Value, setGolden2Value] = useState('')
+  const [gold3Value, setGolden3Value] = useState('')
   const [missingGold, setMissingGold] = useState(0)
   const [missingViolet, setMissingViolet] = useState(0)
   const [missingBlue, setMissingBlue] = useState(0)
-  const [result, setResult] = useState(0)
+  const [result, setResult] = useState('')
   const [isShowModal, setIsShowModal] = useState(false)
 
   const allValues =
-    goldenValue +
-    violetValue +
-    blueValue +
-    violet1Value +
-    violet2Value +
-    gold1Value +
-    gold2Value +
-    gold3Value
+    Number(goldenValue) +
+    Number(violetValue) +
+    Number(blueValue) +
+    Number(violet1Value) +
+    Number(violet2Value) +
+    Number(gold1Value) +
+    Number(gold2Value) +
+    Number(gold3Value)
 
   const handleCalculate = () => {
     if (allValues === 0) {
       return setIsShowModal(true)
     }
 
-    const totalViolet = violetValue + violet1Value * 2 + violet2Value * 4
+    const totalViolet =
+      Number(violetValue) + Number(violet1Value) * 2 + Number(violet2Value) * 4
     const totalGolden =
-      goldenValue +
-      gold1Value * 2 +
-      gold2Value * 4 +
-      gold3Value * 8 +
+      Number(goldenValue) +
+      Number(gold1Value) * 2 +
+      Number(gold2Value) * 4 +
+      Number(gold3Value) * 8 +
       Math.floor(totalViolet / 8) +
-      Math.floor(blueValue / 24)
+      Math.floor(Number(blueValue) / 24)
 
-    setResult(Math.floor(totalGolden / 16))
+    setResult(`${Math.floor(totalGolden / 16)}`)
 
     const remainingGolden = totalGolden % 16
 
@@ -48,6 +49,20 @@ function App() {
     setMissingViolet(missingGold * 8)
     setMissingBlue(missingViolet * 3)
   }
+
+  const handleInputChange =
+    (setter: React.Dispatch<React.SetStateAction<string>>) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.replace(/^0+/, '')
+      setter(value === '' ? '0' : value)
+    }
+
+  const handleBlur =
+    (setter: React.Dispatch<React.SetStateAction<string>>) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      setter(value === '' ? '0' : value)
+    }
 
   return (
     <>
@@ -63,9 +78,10 @@ function App() {
                     id="is-yellow"
                     min="0"
                     type="number"
-                    placeholder="Link input"
                     value={goldenValue}
-                    onChange={e => setGoldenValue(+e.target.value)}
+                    onChange={handleInputChange(setGoldenValue)}
+                    onBlur={handleBlur(setGoldenValue)}
+                    placeholder="0"
                   />
                 </div>
                 <div className="control">
@@ -75,9 +91,10 @@ function App() {
                     id="is-violet"
                     min="0"
                     type="number"
-                    placeholder="Link input"
                     value={violetValue}
-                    onChange={e => setVioletValue(+e.target.value)}
+                    onChange={handleInputChange(setVioletValue)}
+                    placeholder="0"
+                    onBlur={handleBlur(setVioletValue)}
                   />
                 </div>
                 <div className="control">
@@ -87,9 +104,10 @@ function App() {
                     id="is-blue"
                     min="0"
                     type="number"
-                    placeholder="Link input"
                     value={blueValue}
-                    onChange={e => setBlueValue(+e.target.value)}
+                    onChange={handleInputChange(setBlueValue)}
+                    placeholder="0"
+                    onBlur={handleBlur(setBlueValue)}
                   />
                 </div>
               </div>
@@ -101,9 +119,10 @@ function App() {
                     id="is-yellow"
                     min="0"
                     type="number"
-                    placeholder="Link input"
                     value={gold1Value}
-                    onChange={e => setGolden1Value(+e.target.value)}
+                    onChange={handleInputChange(setGolden1Value)}
+                    placeholder="0"
+                    onBlur={handleBlur(setGolden1Value)}
                   />
                 </div>
                 <div className="control">
@@ -113,9 +132,10 @@ function App() {
                     id="is-violet"
                     min="0"
                     type="number"
-                    placeholder="Link input"
                     value={violet1Value}
-                    onChange={e => setViolet1Value(+e.target.value)}
+                    onChange={handleInputChange(setViolet1Value)}
+                    placeholder="0"
+                    onBlur={handleBlur(setViolet1Value)}
                   />
                 </div>
               </div>
@@ -127,9 +147,10 @@ function App() {
                     id="is-yellow"
                     min="0"
                     type="number"
-                    placeholder="Link input"
                     value={gold2Value}
-                    onChange={e => setGolden2Value(+e.target.value)}
+                    onChange={handleInputChange(setGolden2Value)}
+                    placeholder="0"
+                    onBlur={handleBlur(setGolden2Value)}
                   />
                 </div>
                 <div className="control">
@@ -139,9 +160,10 @@ function App() {
                     id="is-violet"
                     min="0"
                     type="number"
-                    placeholder="Link input"
                     value={violet2Value}
-                    onChange={e => setViolet2Value(+e.target.value)}
+                    onChange={handleInputChange(setViolet2Value)}
+                    placeholder="0"
+                    onBlur={handleBlur(setViolet2Value)}
                   />
                 </div>
               </div>
@@ -153,9 +175,10 @@ function App() {
                     id="is-yellow"
                     min="0"
                     type="number"
-                    placeholder="Link input"
                     value={gold3Value}
-                    onChange={e => setGolden3Value(+e.target.value)}
+                    onChange={handleInputChange(setGolden3Value)}
+                    placeholder="0"
+                    onBlur={handleBlur(setGolden3Value)}
                   />
                 </div>
               </div>
@@ -198,6 +221,8 @@ function App() {
           </div>
         )}
       </div>
+
+      <p className="loh">Женя лох</p>
     </>
   )
 }

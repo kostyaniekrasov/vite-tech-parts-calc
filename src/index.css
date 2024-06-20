@@ -212,3 +212,12 @@ input {
 .result {
   background-color: rgb(255, 0, 0);
 }
+
+.result::placeholder {
+  color: #fff;
+}
+
+.loh {
+  color: #5a5a5a1a;
+  font-size: 4rem;
+}
